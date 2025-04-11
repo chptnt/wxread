@@ -52,7 +52,25 @@ def get_wr_skey():
 
 
 index = 1
-while index <= READ_NUM:
+# 随机选取一个章节开始
+chapter_cursor = random.randint(0, len(chapters) - 1)
+co_cursor = 0
+while index < READ_NUM:
+
+    chapter = chapters[chapter_cursor]
+    data['ci'] = chapter[0]
+    data['c'] = chapter[1]
+    data['pr'] = chapter[2]
+    data['co'] = cos[co_cursor]
+
+    # 章节内页数位置（即参数co）遍历，遍历结束后切换章节
+    if co_cursor < len(cos)-1:
+        co_cursor += 1
+    else:
+        co_cursor = 0
+        chapter_cursor = (chapter_cursor + 1) % len(chapters)
+
+    data.pop('s')
     data['ct'] = int(time.time())
     data['ts'] = int(time.time() * 1000)
     data['rn'] = random.randint(0, 1000)
